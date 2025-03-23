@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>SignUp</title>
+		<link rel="icon" href="./img/logo.png" />
+
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+		<!-- File CSS -->
+		<link rel="stylesheet" href="css/main.css" />
+		<link rel="stylesheet" href="css/auth.css" />
+		<link rel="stylesheet" href="css/toast.css" />
+	</head>
+	<body>
+		<div class="auth">
+			<div class="container">
+				<div class="title-auth">
+					<h1>Sign Up</h1>
+					<p>Welcome to Click Shop - let's create your account</p>
+				</div>
+				<div id="toast-container"></div>
+				<form id="signUpForm">
+					<div class="input-container">
+						<input type="text" id="name" name="name" placeholder=" " />
+						<label for="name"> Name:</label>
+						<span id="nameError" class="error"
+							>Name must be between 3 and 20 characters.</span
+						>
+					</div>
+
+					<div class="input-container">
+						<input type="email" id="email" name="email" placeholder="" />
+						<label for="email">Email:</label>
+						<span id="emailError" class="error"
+							>Please enter a valid email address.</span
+						>
+					</div>
+
+					<div class="input-container">
+						<input
+							type="password"
+							id="password"
+							name="password"
+							placeholder="" />
+						<label for="password">Password:</label>
+						<span id="passwordError" class="error">
+							Password must contain at least one lowercase letter, one uppercase
+							letter, one digit, one special character, and be at least 8
+							characters long.
+						</span>
+					</div>
+
+					<div class="input-container">
+						<input
+							type="password"
+							id="rePassword"
+							name="rePassword"
+							placeholder="" />
+						<label for="rePassword">Confirm Password:</label>
+						<span id="rePasswordError" class="error">
+							Passwords do not match.</span
+						>
+					</div>
+					<div class="input-container">
+						<input type="number" id="Phone" name="Phone" placeholder="" />
+						<label for="Phone">Phone:</label>
+						<span id="PhoneError" class="error"
+							>Please enter a valid Egyptian phone number.</span
+						>
+					</div>
+					<div
+						style="
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+						">
+						<button type="submit" class="btn">SignUp</button>
+
+						<p class="login-link">
+							Already have an account? <a href="login.html">Login</a>
+						</p>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- File JS -->
+		<script type="module" src="js/auth.js"></script>
+	</body>
+</html>

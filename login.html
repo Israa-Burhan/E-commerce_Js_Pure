@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Login</title>
+		<link rel="icon" href="./img/logo.png" />
+
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+		<!-- File CSS -->
+		<link rel="stylesheet" href="css/toast.css" />
+		<link rel="stylesheet" href="css/main.css" />
+		<link rel="stylesheet" href="css/auth.css" />
+	</head>
+	<body>
+		<div class="auth">
+			<div class="container">
+				<div class="title-auth">
+					<h1>Login</h1>
+					<p>Welcome to FreshCart - let's create your account</p>
+				</div>
+				<div id="toast-container"></div>
+
+				<form id="loginForm">
+					<div class="input-container">
+						<input type="email" id="email" name="email" placeholder="" />
+						<label for="email">Email</label>
+						<span id="emailError" class="error"
+							>Please enter a valid email address.</span
+						>
+					</div>
+					<div class="input-container">
+						<input
+							type="password"
+							id="password"
+							name="password"
+							placeholder="" />
+						<label for="password">Password</label>
+						<!-- <span id="passwordError" class="error"> Password is required </span> -->
+					</div>
+					<div
+						style="
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+						">
+						<button type="submit" id="submitButton" class="btn">Login</button>
+
+						<p class="login-link">
+							Don't have an account? <a href="register.html">Sign Up</a>
+						</p>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- File JS -->
+		<script type="module" src="js/auth.js"></script>
+	</body>
+</html>
