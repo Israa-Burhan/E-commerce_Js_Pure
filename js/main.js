@@ -34,7 +34,7 @@ async function fetchAllProducts() {
 			}
 		} while (currentPage <= totalPages);
 
-		loadProducts(allProducts); // عرض المنتجات
+		loadProducts(allProducts);
 	} catch (error) {}
 }
 
@@ -345,6 +345,7 @@ async function addToCart(productId) {
 		}, 0);
 	}
 }
+
 function loadUserCart() {
 	const token = isLoggedIn();
 	if (token) {
