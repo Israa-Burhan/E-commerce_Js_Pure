@@ -98,14 +98,59 @@ async function fetchAllProducts() {
 // 		loader.style.display = "none";
 // 	}, 1000);
 // }
+// async function loadProducts(products) {
+// 	await fetchFavorites();
+// 	displayLoaderAndClearContainer();
+
+// 	setTimeout(() => {
+// 		renderProducts(products);
+// 	}, 1000);
+// }
 async function loadProducts(products) {
 	await fetchFavorites();
 	displayLoaderAndClearContainer();
 
 	setTimeout(() => {
 		renderProducts(products);
+		checkAllImagesLoaded();
 	}, 1000);
 }
+function checkAllImagesLoaded() {
+	const images = document.querySelectorAll("img");
+	let loadedImages = 0;
+
+	images.forEach((img) => {
+		if (img.complete) {
+			loadedImages++;
+		} else {
+			img.onload = () => {
+				loadedImages++;
+				if (loadedImages === images.length) {
+					hideGlobalLoader();
+				}
+			};
+			img.onerror = () => {
+				loadedImages++;
+				if (loadedImages === images.length) {
+					hideGlobalLoader();
+				}
+			};
+		}
+	});
+
+	if (loadedImages === images.length) {
+		hideGlobalLoader();
+	}
+}
+
+function hideGlobalLoader() {
+	if (loader) {
+		loader.style.display = "none";
+	}
+}
+document.addEventListener("DOMContentLoaded", () => {
+	loadProducts(allProducts).then(() => checkAllImagesLoaded());
+});
 
 function displayLoaderAndClearContainer() {
 	if (loader) loader.style.display = "flex";
@@ -153,7 +198,6 @@ function renderProducts(products) {
 			container.appendChild(productElement);
 		});
 
-		// إضافة الأحداث إلى الأزرار والعناصر
 		document.querySelectorAll(".add-to-cart").forEach((button) => {
 			button.addEventListener("click", handleAddToCart);
 		});
@@ -168,7 +212,7 @@ function renderProducts(products) {
 		});
 	}
 
-	if (loader) loader.style.display = "none";
+	// if (loader) loader.style.display = "none";
 }
 
 fetchAllProducts();
