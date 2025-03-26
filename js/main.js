@@ -38,74 +38,6 @@ async function fetchAllProducts() {
 	} catch (error) {}
 }
 
-// async function loadProducts(products) {
-// 	await fetchFavorites();
-
-// 	loader.style.display = "flex";
-// 	container.innerHTML = "";
-// 	setTimeout(() => {
-// 		if (products.length === 0) {
-// 			container.innerHTML = "<p class='no-products'>No products available.</p>";
-// 		} else {
-// 			products.forEach((product) => {
-// 				const productElement = document.createElement("div");
-// 				productElement.classList.add("product");
-// 				const shortTitle = product.title.split(" ").slice(0, 2).join(" ");
-// 				const subcategoryName = product.subcategory?.length
-// 					? product.category.name
-// 					: "No Category";
-// 				productElement.innerHTML = `
-// 				<span class="view-details" data-id="${product.id}">
-//               <i class="fa-solid fa-eye"></i>
-//             </span>
-//           <img src="${product.imageCover}" alt="${product.title}">
-//           <h2>${shortTitle}</h2>
-//           <h3>${subcategoryName}</h3>
-//           <p>
-//             ${product.price} EGP
-//             <span><i class="fa-solid fa-star"></i> ${
-// 							product.ratingsAverage || 0
-// 						}</span>
-//           </p>
-//           <div class="product-actions">
-//             <button class="add-to-cart" data-id="${
-// 							product.id
-// 						}">Add to Cart</button>
-//             <span class="heart" data-id="${product.id}">
-//               <i class="heartIcon ${
-// 								wishlist.includes(product.id) ? "fa-solid" : "fa-regular"
-// 							} fa-heart"></i>
-//             </span>
-//           </div>
-//         `;
-// 				container.appendChild(productElement);
-// 			});
-
-// 			document.querySelectorAll(".add-to-cart").forEach((button) => {
-// 				button.addEventListener("click", handleAddToCart);
-// 			});
-// 			document.querySelectorAll(".heart").forEach((heartIcon) => {
-// 				heartIcon.addEventListener("click", handleWishlist);
-// 			});
-// 			document.querySelectorAll(".view-details").forEach((eyeIcon) => {
-// 				eyeIcon.addEventListener("click", function () {
-// 					const productId = this.getAttribute("data-id");
-// 					window.location.href = `product-details.html?id=${productId}`;
-// 				});
-// 			});
-// 		}
-
-// 		loader.style.display = "none";
-// 	}, 1000);
-// }
-// async function loadProducts(products) {
-// 	await fetchFavorites();
-// 	displayLoaderAndClearContainer();
-
-// 	setTimeout(() => {
-// 		renderProducts(products);
-// 	}, 1000);
-// }
 async function loadProducts(products) {
 	await fetchFavorites();
 	displayLoaderAndClearContainer();
@@ -217,111 +149,6 @@ function renderProducts(products) {
 
 fetchAllProducts();
 
-/////////////////////////// by localStorage
-
-// async function addToCart(productId) {
-// 	const token = isLoggedIn();
-// 	if (!token) {
-// 		showToast("Please log in to add products to the cart.", "info");
-// 		return;
-// 	}
-
-// 	// جلب معرف المستخدم من التوكن (يجب أن يدعمه الـ API)
-// 	const userId = getUserIdFromToken(token);
-// 	if (!userId) {
-// 		console.error("❌ User ID not found.");
-// 		return;
-// 	}
-
-// 	// جلب سلة المستخدم الحالية
-// 	const cartData = JSON.parse(localStorage.getItem(`cart_${userId}`)) || [];
-
-// 	// تحقق إذا كان المنتج موجودًا في السلة
-// 	if (cartData.includes(productId)) {
-// 		showToast("This product is already in your cart.", "warning");
-// 		return;
-// 	}
-
-// 	try {
-// 		const response = await fetch(`${BASE_URL}cart`, {
-// 			method: "POST",
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 				token: token,
-// 			},
-// 			body: JSON.stringify({ productId }),
-// 		});
-
-// 		if (!response.ok) throw new Error("Failed to add product to cart.");
-
-// 		// تحديث بيانات السلة الخاصة بالمستخدم في localStorage
-// 		cartData.push(productId);
-// 		localStorage.setItem(`cart_${userId}`, JSON.stringify(cartData));
-
-// 		showToast("✅ Product added to cart successfully!", "success");
-// 		updateCartCount();
-// 	} catch (error) {
-// 		console.error("❌ Error adding to cart:", error);
-// 		showToast("An error occurred. Please try again.", "error");
-// 	}
-// }
-// function loadUserCart() {
-// 	const token = isLoggedIn();
-// 	if (token) {
-// 		const userId = getUserIdFromToken(token);
-// 		const cartData = JSON.parse(localStorage.getItem(`cart_${userId}`)) || [];
-// 		updateCartCount(cartData.length); // تمرير عدد المنتجات إلى updateCartCount
-// 	}
-// }
-// function updateCartCount(count = null) {
-// 	const cartCountElement = document.querySelector(".count_item_header");
-
-// 	// التحقق من وجود العنصر لتجنب الخطأ
-// 	if (!cartCountElement) {
-// 		console.warn("⚠️ Warning: Element '.count_item_header' not found!");
-// 		return;
-// 	}
-
-// 	const token = isLoggedIn();
-// 	if (count === null && token) {
-// 		const userId = getUserIdFromToken(token);
-// 		const cartData = JSON.parse(localStorage.getItem(`cart_${userId}`)) || [];
-// 		count = cartData.length;
-// 	}
-
-// 	// تعيين العدد، وإذا لم يكن هناك منتجات اجعله 0
-// 	cartCountElement.textContent = count || 0;
-// }
-// document.addEventListener("DOMContentLoaded", () => {
-// 	updateCartCount(); // تحديث العدد عند تحميل الصفحة
-// });
-// function getUserIdFromToken(token) {
-// 	try {
-// 		if (!token) return null; // تجنب الأخطاء إذا لم يكن هناك توكن
-// 		const payload = JSON.parse(atob(token.split(".")[1]));
-// 		return payload?.userId || payload?.id || null; // بعض التوكنات قد تستخدم `id` بدلاً من `userId`
-// 	} catch (error) {
-// 		console.error("Error decoding token:", error);
-// 		return null;
-// 	}
-// }
-// function handleAddToCart(event) {
-// 	const productId = event.target.getAttribute("data-id");
-// 	if (productId) {
-// 		addToCart(productId);
-// 	}
-// }
-// document.addEventListener("DOMContentLoaded", loadUserCart);
-// document.querySelector(".cart-icon").addEventListener("click", function (e) {
-// 	const token = isLoggedIn();
-// 	if (!token) {
-// 		e.preventDefault(); // منع الانتقال إذا لم يكن المستخدم مسجل دخول
-// 		showToast("Please log in to view your cart.", "info");
-// 		// window.location.href = "login.html"; // التوجيه لصفحة تسجيل الدخول
-// 	}
-// });
-
-/////////////// by api data
 async function fetchCartData() {
 	const token = isLoggedIn();
 	if (!token) return;
@@ -464,10 +291,96 @@ async function fetchFavorites() {
 	}
 }
 
+// async function handleWishlist(event) {
+// 	const token = isLoggedIn();
+// 	if (!token) {
+// 		showToast("You need to log in first!", "info");
+// 		return;
+// 	}
+
+// 	const heartIcon = event.currentTarget;
+// 	const productId = heartIcon.getAttribute("data-id");
+// 	const icon = heartIcon.querySelector("i");
+
+// 	// الحصول على المفضلة من LocalStorage
+// 	let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+// 	// التحقق إذا كان المنتج موجودًا في المفضلة
+// 	if (wishlist.includes(productId)) {
+// 		// إزالة المنتج من المفضلة
+
+// 		if (loader) loader.style.display = "flex";
+// 		try {
+// 			const response = await fetch(`${BASE_URL}wishlist/${productId}`, {
+// 				method: "DELETE",
+// 				headers: {
+// 					"Content-Type": "application/json",
+// 					token: token,
+// 				},
+// 			});
+
+// 			const result = await response.json();
+
+// 			if (response.ok) {
+// 				icon.classList.remove("fa-solid", "fa-heart");
+// 				icon.classList.add("fa-regular", "fa-heart");
+
+// 				wishlist = wishlist.filter((id) => id !== productId);
+// 				localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+// 				showToast("Product removed from wishlist", "success");
+// 			} else {
+// 				showToast(`Error: ${result.message}`, "error");
+// 			}
+// 		} catch (error) {
+// 			console.error("❌ Error:", error);
+// 			showToast("Failed to remove from wishlist", "error");
+// 		} finally {
+// 			if (loader) loader.style.display = "none";
+// 		}
+// 	} else {
+// 		if (loader) loader.style.display = "flex";
+// 		// إضافة المنتج إلى المفضلة
+// 		try {
+// 			const response = await fetch(`${BASE_URL}wishlist`, {
+// 				method: "POST",
+// 				headers: {
+// 					"Content-Type": "application/json",
+// 					token: token,
+// 				},
+// 				body: JSON.stringify({ productId }),
+// 			});
+
+// 			const result = await response.json();
+
+// 			if (response.ok) {
+// 				// تحديث الأيقونة إلى قلب ممتلئ
+// 				icon.classList.remove("fa-regular");
+// 				icon.classList.add("fa-solid", "fa-heart");
+
+// 				// إضافة المنتج إلى المفضلة في LocalStorage
+// 				if (!wishlist.includes(productId)) {
+// 					wishlist.push(productId);
+// 					localStorage.setItem("wishlist", JSON.stringify(wishlist));
+// 				}
+
+// 				showToast("Product added to wishlist!", "success");
+// 			} else {
+// 				showToast(`Error: ${result.message}`, "error");
+// 			}
+// 		} catch (error) {
+// 			console.error("❌ Error:", error);
+// 			showToast("Failed to add to wishlist", "error");
+// 		} finally {
+// 			if (loader) loader.style.display = "none";
+// 		}
+// 	}
+// 	updateFavoriteCount();
+// }
 async function handleWishlist(event) {
-	const token = isLoggedIn(); // التحقق من تسجيل الدخول
+	const token = isLoggedIn();
 	if (!token) {
-		showToast("You need to log in first!", "error");
+		showToast("You need to log in first!", "info");
 		return;
 	}
 
@@ -475,13 +388,7 @@ async function handleWishlist(event) {
 	const productId = heartIcon.getAttribute("data-id");
 	const icon = heartIcon.querySelector("i");
 
-	// الحصول على المفضلة من LocalStorage
-	let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-
-	// التحقق إذا كان المنتج موجودًا في المفضلة
 	if (wishlist.includes(productId)) {
-		// إزالة المنتج من المفضلة
-
 		if (loader) loader.style.display = "flex";
 		try {
 			const response = await fetch(`${BASE_URL}wishlist/${productId}`, {
@@ -495,13 +402,10 @@ async function handleWishlist(event) {
 			const result = await response.json();
 
 			if (response.ok) {
-				// تحديث الأيقونة إلى قلب فارغ
 				icon.classList.remove("fa-solid", "fa-heart");
 				icon.classList.add("fa-regular", "fa-heart");
 
-				// إزالة المنتج من المفضلة في LocalStorage
 				wishlist = wishlist.filter((id) => id !== productId);
-				localStorage.setItem("wishlist", JSON.stringify(wishlist));
 
 				showToast("Product removed from wishlist", "success");
 			} else {
@@ -515,7 +419,6 @@ async function handleWishlist(event) {
 		}
 	} else {
 		if (loader) loader.style.display = "flex";
-		// إضافة المنتج إلى المفضلة
 		try {
 			const response = await fetch(`${BASE_URL}wishlist`, {
 				method: "POST",
@@ -529,15 +432,10 @@ async function handleWishlist(event) {
 			const result = await response.json();
 
 			if (response.ok) {
-				// تحديث الأيقونة إلى قلب ممتلئ
 				icon.classList.remove("fa-regular");
 				icon.classList.add("fa-solid", "fa-heart");
 
-				// إضافة المنتج إلى المفضلة في LocalStorage
-				if (!wishlist.includes(productId)) {
-					wishlist.push(productId);
-					localStorage.setItem("wishlist", JSON.stringify(wishlist));
-				}
+				wishlist.push(productId);
 
 				showToast("Product added to wishlist!", "success");
 			} else {
@@ -553,26 +451,42 @@ async function handleWishlist(event) {
 	updateFavoriteCount();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-	const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-	const heartIcons = document.querySelectorAll(".heart-icon");
+// document.addEventListener("DOMContentLoaded", () => {
+// 	const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+// 	const heartIcons = document.querySelectorAll(".heart-icon");
 
+// 	heartIcons.forEach((heartIcon) => {
+// 		const productId = heartIcon.getAttribute("data-id");
+// 		const icon = heartIcon.querySelector("i");
+
+// 		if (wishlist.includes(productId)) {
+// 			// إذا كان المنتج في المفضلة، اجعل القلب ممتلئًا
+// 			icon.classList.remove("fa-regular");
+// 			icon.classList.add("fa-solid", "fa-heart");
+// 		} else {
+// 			// إذا لم يكن المنتج في المفضلة، اجعل القلب فارغًا
+// 			icon.classList.remove("fa-solid", "fa-heart");
+// 			icon.classList.add("fa-regular", "fa-heart");
+// 		}
+// 	});
+// });
+document.addEventListener("DOMContentLoaded", async () => {
+	await fetchFavorites();
+
+	const heartIcons = document.querySelectorAll(".heart-icon");
 	heartIcons.forEach((heartIcon) => {
 		const productId = heartIcon.getAttribute("data-id");
 		const icon = heartIcon.querySelector("i");
 
 		if (wishlist.includes(productId)) {
-			// إذا كان المنتج في المفضلة، اجعل القلب ممتلئًا
 			icon.classList.remove("fa-regular");
 			icon.classList.add("fa-solid", "fa-heart");
 		} else {
-			// إذا لم يكن المنتج في المفضلة، اجعل القلب فارغًا
 			icon.classList.remove("fa-solid", "fa-heart");
 			icon.classList.add("fa-regular", "fa-heart");
 		}
 	});
 });
-
 document.addEventListener("DOMContentLoaded", function () {
 	updateFavoriteCount();
 });

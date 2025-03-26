@@ -8,7 +8,7 @@ async function fetchCartData() {
 		showToast("Please log in to view your cart.", "info");
 		return;
 	}
-
+	loader.style.display = "flex";
 	try {
 		const response = await fetch(`${BASE_URL}cart`, {
 			method: "GET",
@@ -27,6 +27,8 @@ async function fetchCartData() {
 	} catch (error) {
 		console.error("❌ Error fetching cart data:", error);
 		showToast("Failed to load cart. Please try again.", "error");
+	} finally {
+		loader.style.display = "none";
 	}
 }
 

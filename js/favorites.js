@@ -3,11 +3,6 @@ import { updateFavoriteCount } from "./updateCount.js";
 
 const loader = document.getElementById("loader-container");
 
-// Fetch and display favorite products on page load
-document.addEventListener("DOMContentLoaded", function () {
-	fetchFavorites();
-});
-
 /**
  * Fetches the user's favorite products from the API.
  * If the user is not logged in, a message is displayed.
@@ -19,7 +14,7 @@ async function fetchFavorites() {
 
 		return;
 	}
-
+	loader.style.display = "flex";
 	try {
 		const response = await fetch(`${BASE_URL}wishlist`, {
 			method: "GET",
@@ -40,8 +35,14 @@ async function fetchFavorites() {
 	} catch (error) {
 		console.error("❌ Error fetching favorites:", error);
 		showToast("Error fetching favorites.", "error");
+	} finally {
+		loader.style.display = "none";
 	}
 }
+// Fetch and display favorite products on page load
+document.addEventListener("DOMContentLoaded", function () {
+	fetchFavorites();
+});
 
 /**
  * Displays the list of favorite products in the table.

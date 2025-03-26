@@ -41,8 +41,30 @@ if (form && form.id === "signUpForm") {
 		Phone: phoneRegex,
 	};
 
+	// const checkSignUpFields = () => {
+	// 	const allValid = signUpFields.every((id) => {
+	// 		const input = document.getElementById(id);
+	// 		const value = input.value.trim();
+	// 		const errorElement = document.getElementById(id + "Error");
+
+	// 		if (id === "rePassword") {
+	// 			const password = document.getElementById("password").value;
+	// 			const isValid = value === password;
+	// 			errorElement.style.display = value && !isValid ? "block" : "none";
+	// 			return isValid;
+	// 		}
+
+	// 		const isValid = validationRules[id]?.test(value) ?? true;
+	// 		errorElement.style.display = value && !isValid ? "block" : "none";
+	// 		return isValid;
+	// 	});
+
+	// 	submitButton.disabled = !allValid;
+	// };
 	const checkSignUpFields = () => {
-		const allValid = signUpFields.every((id) => {
+		let allValid = true; // للتحكم في تعطيل زر التسجيل
+
+		signUpFields.forEach((id) => {
 			const input = document.getElementById(id);
 			const value = input.value.trim();
 			const errorElement = document.getElementById(id + "Error");
@@ -51,12 +73,14 @@ if (form && form.id === "signUpForm") {
 				const password = document.getElementById("password").value;
 				const isValid = value === password;
 				errorElement.style.display = value && !isValid ? "block" : "none";
-				return isValid;
+				if (!isValid) allValid = false;
+				return;
 			}
 
 			const isValid = validationRules[id]?.test(value) ?? true;
 			errorElement.style.display = value && !isValid ? "block" : "none";
-			return isValid;
+
+			if (!isValid) allValid = false;
 		});
 
 		submitButton.disabled = !allValid;
